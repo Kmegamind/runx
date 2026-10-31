@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #10191a;
+  --foreground: #f5f2eb;
 }
 
 @theme inline {
@@ -10,16 +10,335 @@
   --color-foreground: var(--foreground);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family:
-    -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+.home-shell {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 28px clamp(24px, 6vw, 88px) 25px;
+  background:
+    radial-gradient(
+      circle at 22% 32%,
+      rgba(38, 89, 84, 0.22),
+      transparent 31rem
+    ),
+    linear-gradient(135deg, #102020 0%, #11191a 58%, #1a1b18 100%);
+}
+
+.home-glow {
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid rgba(211, 221, 193, 0.07);
+  border-radius: 50%;
+}
+
+.home-glow-top {
+  top: -25rem;
+  right: -9rem;
+  width: 52rem;
+  height: 52rem;
+}
+
+.home-glow-bottom {
+  bottom: -31rem;
+  left: -19rem;
+  width: 55rem;
+  height: 55rem;
+}
+
+.topbar,
+.hero,
+.run-card,
+.home-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #f5f2eb;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border: 1px solid rgba(245, 242, 235, 0.38);
+  border-radius: 10px;
+  color: #e8a273;
+}
+
+.brand-mark svg {
+  width: 23px;
+  height: 23px;
+  fill: currentColor;
+}
+
+.profile-button {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  place-items: center;
+  border: 1px solid rgba(245, 242, 235, 0.17);
+  border-radius: 50%;
+  background: rgba(245, 242, 235, 0.07);
+  color: #e9e9df;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.hero {
+  width: min(100%, 650px);
+  margin: clamp(72px, 11vh, 132px) auto 0;
+  text-align: center;
+}
+
+.eyebrow,
+.card-kicker,
+.home-footer {
+  color: #8d9991;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.eyebrow {
+  margin: 0 0 17px;
+  color: #e8a273;
+}
+
+.hero h1 {
+  margin: 0;
+  color: #f7f3eb;
+  font-size: clamp(48px, 8vw, 78px);
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.98;
+}
+
+.accent {
+  color: #e8a273;
+}
+
+.hero-copy {
+  margin: 24px 0 0;
+  color: #a4afaa;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.run-card {
+  width: min(100%, 520px);
+  margin: clamp(54px, 8vh, 82px) auto 0;
+  padding: 29px;
+  border: 1px solid rgba(229, 231, 211, 0.13);
+  border-radius: 17px;
+  background: rgba(28, 41, 40, 0.83);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.23);
+  backdrop-filter: blur(12px);
+}
+
+.card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.card-kicker {
+  margin: 0 0 10px;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+}
+
+.card-heading h2 {
+  margin: 0;
+  color: #f4f2e9;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.shoe-icon {
+  color: #e8a273;
+  font-size: 31px;
+  line-height: 1;
+  transform: rotate(-32deg);
+}
+
+.duration-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.duration-option {
+  position: relative;
+  display: flex;
+  min-height: 84px;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(229, 231, 211, 0.12);
+  border-radius: 10px;
+  background: rgba(16, 29, 29, 0.55);
+  color: #a4afaa;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.duration-option:hover {
+  transform: translateY(-2px);
+  border-color: rgba(232, 162, 115, 0.65);
+}
+
+.duration-option.selected {
+  border-color: #e8a273;
+  background: rgba(199, 110, 67, 0.12);
+  color: #f7f3eb;
+}
+
+.duration-number {
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.06em;
+}
+
+.duration-unit {
+  margin-top: 2px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.selected-dot {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e8a273;
+}
+
+.start-button {
+  display: flex;
+  width: 100%;
+  margin-top: 18px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 16px 21px;
+  border: 0;
+  border-radius: 9px;
+  background: #e8a273;
+  color: #202725;
+  font-size: 13px;
+  font-weight: 700;
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.start-button:hover {
+  background: #f0b185;
+  transform: translateY(-1px);
+}
+
+.button-arrow {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 0;
+}
+
+.card-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 16px 0 0;
+  color: #7e8d86;
+  font-size: 10px;
+}
+
+.pulse-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #a2c3a0;
+  box-shadow: 0 0 0 3px rgba(162, 195, 160, 0.1);
+}
+
+.home-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 65px;
+  font-size: 8px;
+  letter-spacing: 0.17em;
+}
+
+.footer-line {
+  width: 30px;
+  height: 1px;
+  background: #596663;
+}
+
+@media (max-width: 500px) {
+  .home-shell {
+    padding: 22px 18px 21px;
+  }
+
+  .hero {
+    margin-top: 75px;
+  }
+
+  .run-card {
+    padding: 22px 17px;
+  }
+
+  .home-footer {
+    padding-top: 48px;
+  }
 }
