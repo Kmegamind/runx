@@ -43,8 +43,8 @@ src/lib/progress/  checkpoint rules and persistence adapters (db, localStorage)
 src/lib/db/        Supabase client and queries
 src/content/       episode manifest + audio file references
 supabase/migrations/  schema; seed script in supabase/seed.sql
-tests/unit/  tests/integration/  tests/e2e/   (mirror src/)
-docs/              PRD.md, design/, api/openapi.yaml, sprints/, hw3/
+tests/unit/  tests/integration/   (mirror src/)    e2e/  Playwright flows
+docs/              PRD.md, architecture.md, decisions/, design/, features/, api/openapi.yaml, sprints/
 ```
 Core pattern: `buildTimeline(manifest, durationMin, checkpoint) -> Timeline` is a pure function. Inject clock, audio and storage so logic is testable without waiting 45 minutes.
 

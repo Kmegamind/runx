@@ -16,6 +16,10 @@
 |---|---|
 | [`docs/PRD.md`](docs/PRD.md) | Product requirements: user stories US-1..US-9 with acceptance criteria |
 | [`docs/features/`](docs/features/README.md) | One PRD per feature (FR-01..FR-13) and parked ideas |
+| [`docs/architecture.md`](docs/architecture.md) | Modules, data model and key flows |
+| [`docs/decisions/`](docs/decisions/README.md) | One short record per big technical choice |
+| [`docs/sprints/`](docs/sprints/sprint-1/planning.md) | Sprint planning, standups and retrospectives |
+| [`docs/api/openapi.yaml`](docs/api/openapi.yaml) | Draft public API contract |
 | [`DESIGN.md`](DESIGN.md) | Design system: colors, type, components, accessibility |
 | [`docs/design/`](docs/design/README.md) | Interactive prototype (`mockup.html`), tokens and art assets |
 | [`docs/content/`](docs/content/script-style-guide.md) | Script style guide and Episode 1 scenes |

@@ -131,13 +131,13 @@ Mobile Safari and Chrome. Large simple controls usable while moving. Accessible 
 - D1: scope follows the P2 spec (full stack, auth, database, public API, 3+ features or roles).
 - D2: the story is fitted to the chosen duration; climax in the last 3 minutes.
 - D3: early stop: Save for next time is Must, Finish the story now is Should.
+- D4 (2026-10-31): authentication uses Supabase Auth (see `docs/decisions/0005-auth-supabase.md`).
 - Feature-level scope, MoSCoW and acceptance details live in `docs/features/FR-xx` and win over this summary if they differ.
 
 **Open:**
-1. **Auth provider:** Supabase Auth vs. custom JWT.
-2. **Audio:** pre-generated TTS files vs. browser speech (browser speech cannot play on a locked screen).
-3. **Script review:** who decides whether the English comedy "sounds like Sancho"?
-4. **Optional later validation:** 5–10 target runners, one session each plus a short interview, asking what they remember and whether they want the next episode.
+1. **Audio:** pre-generated TTS files vs. browser speech (browser speech cannot play on a locked screen).
+2. **Script review:** who decides whether the English comedy "sounds like Sancho"?
+3. **Optional later validation:** 5–10 target runners, one session each plus a short interview, asking what they remember and whether they want the next episode.
 
 ## 14. Parking lot (TBD, not part of the P2 scope)
 Ideas we may revisit after P2 if time allows. Do not plan, build or write issues for them as part of P2. Details in `docs/features/parked/`.
