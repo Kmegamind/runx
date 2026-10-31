@@ -1,25 +1,24 @@
 # RunX Design System
 
-RunX tells a Don Quixote story while you run. Every screen exists in two worlds:
+RunX tells a Don Quixote story while you run. The look is bright La Mancha daylight: a sky background, glass surfaces and 3D characters. The controls are the same on every screen; the fun lives in the story content, not in the controls.
 
-- **Dream world (Quixote’s eyes):** bright La Mancha daylight, 3D characters, the windmill is a giant.
-- **Real world (Sancho’s eyes):** cream lined paper, graphite sketches, the windmill is a windmill.
-
-The joke is that the same moment is told two ways. The controls never change between worlds; only the content does.
+## Scope for P2
+Build: the tokens below, the **Home** (pre-run), **Running**, **Stop sheet** and **Resume** screens, and the loading, error and too-short states.
+Not in P2, even though sections below describe some of them: a second visual world or any world toggle, the postcard and Share, the tab bar, music, stereo placement, hoofbeats and earcons, and any cadence or pace display. Build one of these only when an issue asks for it.
 
 ## Principles
 
 1. **Ear first.** During a run the phone is in a pocket about 90% of the time. Story, rhythm and immersion live in the audio.
 2. **Glance in two seconds.** While running, a screen answers only three questions: how long is left, who is talking, and how do I pause.
-3. **Play before and after.** The stage, stickers, world switching and postcards belong to the pre-run and post-run screens.
+3. **Play before and after.** The stage and stickers belong to the pre-run and post-run screens.
 4. **Native feel.** Use iOS patterns and system fonts so the web app feels like an iPhone app.
-5. **Fun lives in content, never in controls.** Pause, Stop and the timer keep the same position, size and wording in both worlds.
+5. **Fun lives in content, never in controls.** Pause, Stop and the timer keep the same position, size and wording on every screen.
 
 ## Color
 
-The app root carries `data-world="dream"` or `data-world="real"`. Components read only the semantic tokens, which change with the world.
+Components read only the semantic tokens below (CSS variables in `docs/design/tokens.css`).
 
-### Dream world (Daylight)
+### Daylight palette
 
 | Token | Value | Role |
 |---|---|---|
@@ -32,27 +31,12 @@ The app root carries `data-world="dream"` or `data-world="real"`. Components rea
 | `--c-tint-fg` | `#1F4E8C` | Primary button label (8:1) |
 | `--c-accent` | `#E3A33B` | Current story part, current windmill sail |
 
-### Real world (Paper)
-
-| Token | Value | Role |
-|---|---|---|
-| `--c-paper` | `#F3EFE4` | Screen background |
-| `--c-rule` | `#DCD5C2` | Notebook lines, every 24px |
-| `--c-fg` | `#2E2A1F` | Text, icons, sketch lines (13:1) |
-| `--c-fg-2` | `#6A6250` | Secondary text (5.6:1) |
-| `--c-glass` | `rgba(255,252,245,.78)` | Card fill |
-| `--c-glass-line` | `rgba(46,42,31,.22)` | Card border |
-| `--c-tint-bg` | `#2E2A1F` | Primary button fill |
-| `--c-tint-fg` | `#F3EFE4` | Primary button label |
-| `--c-accent` | `#4F6B1F` | Current story part, current windmill sail |
-
 ### Characters and system
 
 | Token | Value | Role |
 |---|---|---|
 | `--c-quixote` | `#E3A33B` | Quixote speaker mark (shape only, never text) |
-| `--c-sancho` | `#A7B56A` | Sancho speaker mark in the dream world |
-| `--c-sancho-ink` | `#4F6B1F` | Sancho speaker mark and text in the real world |
+| `--c-sancho` | `#A7B56A` | Sancho speaker mark |
 | `--c-sys-blue` / `--c-sys-green` / `--c-sys-gray` | `#0A84FF` / `#34C759` / `#8E8E93` | Icon tiles in sheet rows |
 | `--c-sheet` | `rgba(246,246,250,.94)` | Bottom sheet background |
 | `--c-label` / `--c-label-2` | `#1C1C1E` / `#6C6C70` | Text inside sheets |
@@ -64,7 +48,6 @@ The purple cape and gold trim in the character art are illustration colors. Keep
 
 - `--font-ui`: `-apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif` for all interface text.
 - `--font-num`: `ui-rounded, "SF Pro Rounded", -apple-system, sans-serif` for the timer, clock and stats, always with `font-variant-numeric: tabular-nums`.
-- `--font-sancho`: `"Gaegu", cursive` at weight 700, used only for story lines and headings in the real world. Never use it below 18px.
 
 | Token | Size / line height | Weight | Use |
 |---|---|---|---|
@@ -73,8 +56,7 @@ The purple cape and gold trim in the character art are illustration colors. Keep
 | `--fs-large-title` | 34 / 41 | 700 | Screen titles |
 | `--fs-title-2` | 22 / 28 | 700 | Sheet titles |
 | `--fs-title-3` | 20 / 25 | 700 | Episode title in cards |
-| `--fs-headline` | 17 / 22 | 600 | Buttons, row titles, story line (dream) |
-| `--fs-sancho-line` | 21 / 24 | 700 | Story line (real) |
+| `--fs-headline` | 17 / 22 | 600 | Buttons, row titles, story line |
 | `--fs-subhead` | 15 / 20 | 600 | Segmented control, secondary buttons |
 | `--fs-footnote` | 13 / 18 | 400 | Hints, row subtitles, speaker name |
 | `--fs-caption` | 11 / 13 | 600 | Tab labels, story part labels |
@@ -98,21 +80,17 @@ border: 1px solid var(--c-glass-line);
 box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 8px 24px rgba(0,0,0,.14);
 ```
 
-Under `prefers-reduced-transparency: reduce`, drop the blur and use a solid fill: `#1D3C6E` in the dream world and `#FFFDF7` in the real world.
+Under `prefers-reduced-transparency: reduce`, drop the blur and use a solid fill: `#1D3C6E`.
 
-**Sheets** use `--c-sheet` with the same blur and always show dark text, in both worlds.
+**Sheets** use `--c-sheet` with the same blur and always show dark text.
 
 ## Characters
 
 **Shape rule:** Don Quixote is always a vertical line: tall, thin, leaning forward, lance ahead. Sancho is always a circle: short, round, leaning back, sceptical. The silhouette alone should identify the speaker at 36px.
 
-**Two renderings per character:**
-- Dream: the 3D character art.
-- Real: a graphite sketch with the same costume and proportions.
+**One rendering per character:** the 3D character art.
 
-Until the sketches exist, the real world applies `filter: grayscale(1) sepia(.28) contrast(1.35) brightness(1.06)` to the dream art.
-
-**You** are the second squire: a faceless runner silhouette that appears on the pre-run stage and on the postcard.
+**You** are the second squire: a faceless runner silhouette that appears on the pre-run stage (and later on the postcard).
 
 **Likeness:** faces stay stylised. Never show reference photos or real people’s names in the app, the repo or demo material.
 
@@ -129,27 +107,24 @@ Until the sketches exist, the real world applies `filter: grayscale(1) sepia(.28
 | Recap and resume | Dreamy | Exasperated |
 | Postcard and share | Inspired | Laughing |
 
-**Assets:** `/public/characters/{quixote|sancho}/{dream|real}/{expression}.webp`, square, 512px, exported at 2x. Avatar sizes are 36px in captions, 40px in message bubbles, 52px as lock screen artwork and 60px in the sheet header.
+**Assets:** `/public/characters/{quixote|sancho}/dream/{expression}.webp`, square, 512px, exported at 2x. Avatar sizes are 36px in captions, 40px in message bubbles, 52px as lock screen artwork and 60px in the sheet header.
 
-## Two-world copy
+## Copy
 
-Story words change with the world. Action words never do.
+| Element | Text |
+|---|---|
+| Episode title | Giants on the Horizon |
+| Start button | Ride out |
+| Timer label | until glory |
+| Stop sheet title | Retreat for now? |
+| Post-run title | You were there |
+| Resume title | Welcome back |
 
-| Element | Dream | Real |
-|---|---|---|
-| Episode title | Giants on the Horizon | Windmills on the Horizon |
-| Start button | Ride out | Start walking |
-| Timer label | until glory | until dinner |
-| Stop sheet title | Retreat for now? | Stopping for today? |
-| Post-run title | You were there | Nice run |
-| Resume title | Welcome back | Oh, you’re back |
-| World toggle | Helmet on | Basin |
-
-These labels stay the same in both worlds: Pause, Stop, Save for next time, Finish the story now, Keep running, Continue the story, Share, Done.
+Action labels are fixed and never restyled as jokes: Pause, Stop, Save for next time, Finish the story now, Keep running, Continue the story, Done.
 
 ## Components
 
-**Large title nav.** A 34px title on the left and a glass capsule button on the right for the world toggle (helmet icon, `aria-pressed`). Switching worlds reveals the paper with a 0.75s circular wipe from the toggle.
+**Large title nav.** A 34px title on the left; no buttons on the right in P2.
 
 **Segmented control.** Offers 20, 30 and 45 min. It has a pill track in `rgba(120,120,128,.26)`, 44px segments, and the selected segment is white with dark text and a soft shadow. It uses `role="radiogroup"`.
 
@@ -164,27 +139,27 @@ These labels stay the same in both worlds: Pause, Stop, Save for next time, Fini
 
 **Windmill player.** The hero of the running screen. Its four sails are the four story parts: Warm-up, Rising, Climax, Epilogue.
 - Sail states: done is filled, current uses `--c-accent`, upcoming is outlined.
-- Rotation runs from 6s per turn at 120 spm to 1.4s at 190 spm. The prototype maps it from the chosen pace.
-- In the dream world the tower has a giant’s face; in the real world it is a pencil windmill.
+- The sails turn at one constant slow speed (6s per turn) while audio plays and stop when paused. Speed never depends on the runner's pace.
+- The tower has a giant’s face.
 - It uses `role="img"` with a label such as “Story part 2 of 4, Rising”.
 
 **Bottom sheet.** Has a 38×5 grabber, a speaker avatar, a title, one line of context and an inset grouped list. Each row is a full `--row-h` button with a colored icon tile, a title, a subtitle and a chevron. List rows from safest to boldest.
 
 **Now Playing card.** This is the lock screen view, set through the Media Session API (see Audio). It shows speaker artwork, the current line as the title, the speaker and scene as the subtitle, a scrubber, and three controls: replay line, play or pause, next scene.
 
-**Message bubbles.** Recaps are a short exchange: Quixote on the left in a white bubble, Sancho on the right in a tint bubble, each with a 40px avatar. In the real world both bubbles use `--font-sancho`.
+**Message bubbles.** Recaps are a short exchange: Quixote on the left in a white bubble, Sancho on the right in a tint bubble, each with a 40px avatar.
 
-**Postcard.** Two overlapping cards from the scene where the run ended, rotated -4° and 3.5°: Sancho’s sketch version and Quixote’s 3D version. Below them is a grouped stats list (time, scenes, giants slain or windmills hit) with Share and Done.
+**Postcard (not in P2).** Two overlapping cards from the scene where the run ended, rotated -4° and 3.5°: Sancho’s and Quixote’s 3D art. Below them is a grouped stats list (time, scenes, giants slain or windmills hit) with Share and Done.
 
-**Tab bar.** A floating glass pill with Run, Stories and You. Hide it while a run is active.
+**Tab bar (not in P2).** A floating glass pill with Run, Stories and You. Hide it while a run is active.
 
 ## Screens
 
-- **Pre-run:** Title, world toggle, both characters as tilted cards with “You” between them, then a glass card with the episode, length and start button. Add the hint “Pocket your phone, we’ll talk you through it.”
+- **Pre-run:** Title, both characters as tilted cards with “You” between them, then a glass card with the episode, length and start button. Add the hint “Pocket your phone, we’ll talk you through it.”
 - **Lock screen:** The Now Playing card. During a run, this is the main screen.
-- **Running:** Scene count and cadence, the timer, the timer label, the windmill player with part labels, the caption card, then Pause and Stop.
+- **Running:** Scene count, the timer, the timer label, the windmill player with part labels, the caption card, then Pause and Stop.
 - **Stop:** The running screen dimmed behind a sheet with Save for next time, Finish the story now and Keep running.
-- **Post-run:** The postcard, stats, Share and Done.
+- **Post-run:** A plain summary (time, scenes) and Done. The postcard and Share are not in P2.
 - **Resume:** Title, saved time, a two-line recap in bubbles, a Play the recap row with Skip, the length choice, then Continue the story.
 
 ## States
@@ -197,10 +172,7 @@ These labels stay the same in both worlds: Pause, Stop, Save for next time, Fini
 
 ## Audio
 
-- **Stereo cast:** Quixote front-left, Sancho front-right, narrator centred.
-- **Two worlds in sound:** When Quixote speaks, the music lifts with horns and choir; when Sancho speaks, it drops to wind and cicadas.
-- **Rhythm:** A hoofbeat loop at three tempos matched to pace. During the charge, the hoofbeats speed up.
-- **Earcons:** Short, distinct sounds for scene change, the charge countdown, pause and resume. iOS Safari has no vibration API, so audio carries every alert.
+- Music, stereo placement, hoofbeats and earcons are not in P2; the story plays as clean dialogue clips.
 - **Media Session:** Set `metadata` on every line. The title is the line (60 characters max), the artist is the speaker, the album is “RunX, Scene N of 12”, and the artwork is the speaker’s expression. Map `play`, `pause`, `previoustrack` to replay line and `nexttrack` to next scene.
 
 ## Accessibility
@@ -208,7 +180,7 @@ These labels stay the same in both worlds: Pause, Stop, Save for next time, Fini
 - **Contrast:** At least 4.5:1 for body text and 3:1 for text 24px and larger. White text may sit directly on the sky only in the top 35% of the screen; below that, place text on glass. Check against the lightest point behind it.
 - **Targets:** Every interactive element is at least 44×44. Run controls are 60px tall and sheet rows are 64px.
 - **Captions:** Always on during audio. The speaker is identified by name and shape, never by color alone.
-- **Motion:** Under `prefers-reduced-motion`, the sails stop, the world switch becomes a 150ms crossfade, and nothing loops.
+- **Motion:** Under `prefers-reduced-motion`, the sails stop and nothing loops.
 - **Transparency:** Under `prefers-reduced-transparency`, use the solid glass fills listed under Materials.
 - **Text size:** Size type in `rem` and let layouts grow to 200% without clipping the timer or controls.
 - **Labels:** Icon-only buttons get `aria-label`, and decorative art gets `aria-hidden="true"`. The focus ring is a 3px `#0A84FF` outline with a 3px offset.
@@ -216,8 +188,8 @@ These labels stay the same in both worlds: Pause, Stop, Save for next time, Fini
 ## Do’s and Don’ts
 
 **Do**
-- Pair every visual joke with an audio version, so the two worlds work with eyes closed.
-- Keep one primary button per screen and keep control wording identical across worlds.
+- Pair every visual joke with an audio version, so the screen works with eyes closed.
+- Keep one primary button per screen and keep control wording the same on every screen.
 - Use system fonts and iOS patterns before inventing new components.
 - Show the finish time whenever a length is chosen.
 - Use the expression table so each character reacts consistently.
@@ -225,7 +197,6 @@ These labels stay the same in both worlds: Pause, Stop, Save for next time, Fini
 **Don’t**
 - Don’t ask runners to look at the screen to enjoy something.
 - Don’t use the cape purple or the trim gold on UI surfaces.
-- Don’t put Gaegu below 18px or use it in the dream world.
 - Don’t put white text on the lower sky without glass.
 - Don’t show reference photos or real people’s names anywhere.
 - Don’t end a run, skip a line or cut a scene without the runner choosing it.
