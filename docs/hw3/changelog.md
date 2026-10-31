@@ -4,7 +4,7 @@
 Audit against the HW3 rules-file requirements found four gaps. Added: a stack table with the latest stable versions, a testing strategy section (layers, 90% scheduler and 80% `src/lib` coverage goals, patterns), a table of key UI components with expected behavior, and preferred and avoided libraries. Trimmed duplicates; 125 lines.
 
 ## v1.1 to v2 (2026-10-31, after the before/after test)
-Every change below answers a finding in [comparison.md](comparison.md) section 5. The file is 134 lines (limit 150).
+Every change below answers a finding in the before/after comparison (section 5 of that document, submitted separately on Canvas). The file is 134 lines (limit 150).
 
 | # | Finding in the with-rules run | Change in AGENTS.md | Where |
 |---|---|---|---|
