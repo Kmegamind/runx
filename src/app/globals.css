@@ -1,8 +1,9 @@
 @import "tailwindcss";
+@import "../../docs/design/tokens.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #2e6fbf;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -10,16 +11,312 @@
   --color-foreground: var(--foreground);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family:
-    -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-family: var(--font-ui);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.home-shell {
+  min-height: 100svh;
+  background: var(--c-bg);
+  color: var(--c-fg);
+}
+
+.home-content {
+  width: min(100%, 480px);
+  margin: 0 auto;
+  padding: calc(env(safe-area-inset-top) + var(--sp-6)) var(--sp-4)
+    calc(env(safe-area-inset-bottom) + var(--sp-8));
+}
+
+.home-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.eyebrow,
+.card-kicker {
+  margin: 0;
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-header h1 {
+  margin: var(--sp-1) 0 0;
+  font-size: var(--fs-large-title);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.world-toggle {
+  min-width: var(--tap);
+  min-height: var(--tap);
+  border: 1px solid var(--c-glass-line);
+  border-radius: var(--r-pill);
+  background: var(--c-glass);
+  color: var(--c-fg);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.character-stage {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 190px;
+  margin: var(--sp-5) 0 var(--sp-3);
+}
+
+.character-card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 43%;
+  height: 156px;
+  overflow: hidden;
+  border: 2px solid rgb(255 255 255 / 70%);
+  border-radius: var(--r-card);
+  box-shadow: 0 12px 26px rgb(0 0 0 / 28%);
+  transform: rotate(-3deg);
+}
+
+.sancho-card {
+  transform: rotate(3deg);
+}
+
+.character-art {
+  position: absolute;
+  inset: 0;
+  background-position: center top;
+  background-size: cover;
+}
+
+.quixote-art {
+  background-image: url("/characters/quixote/dream/determined.webp");
+}
+
+.sancho-art {
+  background-image: url("/characters/sancho/dream/happy.webp");
+}
+
+.character-card span {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 2.5rem var(--sp-2) var(--sp-2);
+  background: linear-gradient(transparent, rgb(18 48 96 / 80%));
+  font-size: var(--fs-footnote);
+  font-weight: 600;
+  text-align: center;
+}
+
+.runner-marker {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 3px solid var(--c-fg);
+  border-radius: 50%;
+  background: var(--c-accent);
+  color: #1f4e8c;
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  transform: translateX(-50%);
+}
+
+.episode-card {
+  padding: var(--sp-5);
+  border-radius: var(--r-card);
+}
+
+.episode-card h2 {
+  margin: var(--sp-1) 0 var(--sp-2);
+  font-size: var(--fs-title-2);
+  line-height: 1.25;
+}
+
+.episode-description {
+  margin: 0 0 var(--sp-5);
+  color: var(--c-fg-2);
+  font-size: var(--fs-footnote);
+  line-height: 1.45;
+}
+
+.duration-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.duration-fieldset legend {
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-subhead);
+  font-weight: 600;
+}
+
+.duration-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-2);
+}
+
+.duration-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap);
+  gap: var(--sp-1);
+  border: 1px solid var(--c-glass-line);
+  border-radius: var(--r-pill);
+  background: rgb(120 120 128 / 26%);
+  color: var(--c-fg);
+}
+
+.duration-option[data-selected="true"] {
+  border-color: transparent;
+  background: var(--c-tint-bg);
+  color: var(--c-tint-fg);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+}
+
+.duration-option strong {
+  font-size: var(--fs-subhead);
+}
+
+.duration-option span,
+.custom-duration-control span {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+}
+
+.custom-duration {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+}
+
+.custom-duration label {
+  font-size: var(--fs-footnote);
+  font-weight: 600;
+}
+
+.custom-duration-control {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap);
+  gap: var(--sp-1);
+  padding: 0 var(--sp-3);
+  border: 1px solid var(--c-glass-line);
+  border-radius: var(--r-pill);
+  background: var(--c-glass);
+}
+
+.custom-duration input {
+  width: 3.2rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--c-fg);
+  font-size: var(--fs-subhead);
+  text-align: right;
+}
+
+.custom-duration input::placeholder {
+  color: var(--c-fg-2);
+}
+
+.custom-duration p {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.finish-time {
+  margin: var(--sp-4) 0;
+  color: var(--c-fg-2);
+  font-size: var(--fs-footnote);
+  text-align: center;
+}
+
+.finish-time span {
+  color: var(--c-accent);
+}
+
+.finish-time strong {
+  color: var(--c-fg);
+}
+
+.start-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: var(--btn-h);
+  padding: 0 var(--sp-5);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--c-tint-bg);
+  color: var(--c-tint-fg);
+  font-size: var(--fs-headline);
+  font-weight: 600;
+}
+
+.start-button span {
+  font-size: 1.5rem;
+}
+
+.duration-error {
+  margin: var(--sp-2) 0 0;
+  color: #ffd6d6;
+  font-size: var(--fs-footnote);
+}
+
+.pocket-hint {
+  margin: var(--sp-4) 0 0;
+  color: var(--c-fg-2);
+  font-size: var(--fs-footnote);
+  text-align: center;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .world-toggle,
+  .custom-duration-control {
+    background: var(--c-glass-solid);
+  }
+}
+
+@media (max-width: 360px) {
+  .home-content {
+    padding-right: var(--sp-3);
+    padding-left: var(--sp-3);
+  }
+
+  .episode-card {
+    padding: var(--sp-4);
+  }
 }
