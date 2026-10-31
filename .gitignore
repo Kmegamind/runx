@@ -7,3 +7,9 @@ coverage/
 .env*
 !.env.example
 .DS_Store
+/build
+.vercel
+*.pem
+*.tsbuildinfo
+playwright-report/
+test-results/
