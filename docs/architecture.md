@@ -38,4 +38,3 @@ Unit tests cover `src/lib` (scheduler at 90% or more), integration tests cover r
 
 ## Known open points
 - Whether audio keeps playing with the screen locked on iOS Safari (spike, issue #8).
-- Final auth provider confirmation (`docs/decisions/0005-auth-supabase.md`).

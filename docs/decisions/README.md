@@ -15,4 +15,4 @@ Change a decision by adding a new record that supersedes the old one; do not rew
 | [0002](0002-pregenerated-audio.md) | Pre-generated audio clips, not browser speech | Accepted |
 | [0003](0003-scheduler-pure-function.md) | The scheduler is a pure function | Accepted |
 | [0004](0004-early-stop-semantics.md) | Early stop: Save is Must, Finish now is Should | Accepted |
-| [0005](0005-auth-supabase.md) | Authentication with Supabase Auth | Proposed |
+| [0005](0005-auth-supabase.md) | Authentication with Supabase Auth | Accepted |

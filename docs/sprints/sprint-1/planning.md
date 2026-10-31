@@ -22,7 +22,7 @@ Acceptance criteria for each issue are in the issue body. Scope is fixed for the
 ## Working agreements
 - Every change starts from an issue; branch `feature/<issue>-desc` (also `fix/`, `chore/`, `docs/`); tests first; one issue per pull request; a teammate reviews before merge (see `AGENTS.md`).
 - Definition of done: acceptance criteria met, tests, lint and build green in CI, docs updated, issue closed by the PR.
-- Product Owner and Scrum Master rotate each sprint (roles for this sprint: to be recorded in `standups.md`).
+- Product Owner and Scrum Master rotate each sprint. Sprint 1: Product Owner Yue Li; Scrum Master: teammate (name to be added).
 
 ## Risks
 - Audio with a locked screen may not work on iOS (issue #8 decides the fallback).
