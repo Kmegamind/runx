@@ -13,3 +13,7 @@ coverage/
 *.tsbuildinfo
 playwright-report/
 test-results/
+
+# source texts and generated audio (local only; licensing unclear, large)
+data/
+out/
