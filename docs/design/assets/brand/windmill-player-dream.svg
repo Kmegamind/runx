@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 210" width="220" height="210">
+  <!-- Dream world: the tower is a giant. Sails = story parts (done, current, upcoming, upcoming). Rotate the #sails group around 110 98. -->
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1D9A8"/><stop offset="1" stop-color="#C98B5A"/></linearGradient></defs>
+  <path d="M90 208 C90 170 94 140 100 112 H120 C126 140 130 170 130 208 Z" fill="url(#g)"/>
+  <circle cx="103" cy="140" r="3.5" fill="#1C2440"/><circle cx="117" cy="140" r="3.5" fill="#1C2440"/>
+  <path d="M102 152 Q110 159 118 152" stroke="#1C2440" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  <path d="M96 114 L110 92 L124 114 Z" fill="#D9A441"/>
+  <g id="sails" fill="none" stroke="#FFFFFF" stroke-width="2.5">
+    <rect x="104" y="8" width="12" height="82" rx="6" fill="#FFFFFF"/>
+    <rect x="104" y="8" width="12" height="82" rx="6" transform="rotate(90 110 98)" fill="#E3A33B" stroke="#E3A33B"/>
+    <rect x="104" y="8" width="12" height="82" rx="6" transform="rotate(180 110 98)"/>
+    <rect x="104" y="8" width="12" height="82" rx="6" transform="rotate(270 110 98)"/>
+    <circle cx="110" cy="98" r="9" fill="#FFFFFF" stroke="none"/>
+  </g>
+</svg>
