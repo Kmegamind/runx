@@ -8,20 +8,20 @@ Start every response with the emoji 🏃 so we can tell this file was read.
 ## 1. Project context
 RunX is a mobile web app. While the user runs, Don Quixote and Sancho talk in short audio scenes. A **scheduler** builds a story timeline that fits the chosen run length (20/30/45 min), with the climax in the last 3 minutes. Early stop offers *Finish the story now* or *Save for next time*; progress resumes on the next run.
 
-**Read before coding:** `docs/PRD.md` (user stories US-1..US-9 with acceptance criteria), `DESIGN.md` (visual rules), `docs/design/` (prototype: open `mockup.html`). Always read the GitHub issue's acceptance criteria first.
+**Read before coding:** `docs/PRD.md` (user stories US-1..US-9 with acceptance criteria), `DESIGN.md` (visual rules), `docs/design/` (prototype `mockup.html` is large: open it in a browser, never read it as text). Always read the GitHub issue's acceptance criteria first.
 
 ### Stack
-<!-- Latest stable on 2026-10-30. After the scaffold, package.json is the source of truth; upgrade only through a chore issue.
-     If a peer-dependency conflict appears, use the version the Next.js template installs. -->
+<!-- v2 (2026-10-31): installed packages match package.json, which is the source of truth; upgrade only through a chore issue.
+     Not installed yet (Supabase, Zod): latest stable on 2026-10-30, pin when added. -->
 | Area | Choice |
 |---|---|
 | Runtime | Node 24 or newer |
-| App | Next.js 16.4 (App Router), React 19.3, TypeScript 7.0 (`strict`), Tailwind CSS 4.3 |
+| App | Next.js 16.4 (App Router), React 19.3, TypeScript 5 (`strict`), Tailwind CSS 4 |
 | API | Next.js route handlers under `src/app/api/` |
 | Data and auth | Supabase (PostgreSQL, Auth with JWT): `@supabase/supabase-js` 2.118, `@supabase/ssr` 0.12; schema only in `supabase/migrations/` |
 | Validation | Zod 4.6 |
-| Tests | Vitest 5.0, Testing Library for React 16.3 with jsdom, Playwright 1.64 |
-| Lint and format | ESLint 10 (`eslint-config-next`), Prettier 3.9 |
+| Tests | Vitest 5.0, Testing Library for React 16.3 with jsdom 30, Playwright 1.64 |
+| Lint and format | ESLint 9 (`eslint-config-next`), Prettier 3.9 |
 | CI/CD | GitHub Actions; Vercel (preview per PR, production from `main`) |
 
 ### Commands
@@ -49,7 +49,7 @@ docs/              PRD.md, architecture.md, decisions/, design/, features/, api/
 Core pattern: `buildTimeline(manifest, durationMin, checkpoint) -> Timeline` is a pure function. Inject clock, audio and storage so logic is testable without waiting 45 minutes.
 
 ### Naming and style
-- Files `kebab-case.ts`; components `PascalCase.tsx`; types `PascalCase`; constants `UPPER_SNAKE`.
+- Files `kebab-case.ts`. React component files are the one exception: `PascalCase.tsx`, named after the export (`HomeScreen.tsx` exports `HomeScreen`). Types `PascalCase`; constants `UPPER_SNAKE`.
 - Functions are verbs; booleans start with `is/has/can`.
 - Time in code is **seconds**, named with a `Sec` suffix. Minutes only at the UI boundary.
 - No `any`. Named exports. Comments explain *why*.
@@ -60,7 +60,8 @@ Core pattern: `buildTimeline(manifest, durationMin, checkpoint) -> Timeline` is 
 - **Component (Testing Library):** query by role and label, assert behavior, not markup. Cover the duration selector and the Stop sheet.
 - **E2E (Playwright, 375 px viewport):** one full flow with an accelerated clock: pick a length, run, stop, save, resume. Never wait real minutes.
 - **Coverage goals:** at least 90% of lines and branches in `src/lib/scheduler/`, at least 80% in the rest of `src/lib/`; no numeric goal for UI.
-- **Patterns:** TDD (section 4); fake clock, audio and storage injected; no sleeps, no real network; one test file per module, named `<module>.test.ts`; test names read "does X when Y"; test error paths, not only the happy path.
+- **Patterns:** TDD (section 4); fake clock, audio and storage injected; no sleeps, no real network; test names read "does X when Y"; test error paths, not only the happy path.
+- **Test files:** every new module gets its own file named after it (`tests/unit/HomeScreen.test.tsx`); never extend `smoke.test.tsx`. Click every primary action (Start, Stop) in a test; checking that a button renders is not enough. When a page heading or label changes, update the E2E spec in the same change.
 
 ## 2. Product rules the code must respect
 - Scene types: `opening | core | optional | climax | ending | signoff | recap | compressed_ending`.
@@ -82,7 +83,7 @@ Look and tokens are in `DESIGN.md` (Components, States); this table is the behav
 
 | Component | Expected behavior |
 |---|---|
-| Duration selector (segmented control) | `role="radiogroup"` with 20, 30, 45 min; 30 preselected; shows the finish time; always keyboard operable. |
+| Duration selector (segmented control) | `role="radiogroup"` with 20, 30, 45 min; 30 preselected; shows the finish time; keyboard operable with arrow keys (native `<input type="radio">` gives this for free). |
 | Run controls | Pause (primary) and Stop (glass) never move or change wording; Pause freezes the session clock and becomes Resume. |
 | Windmill player (progress) | Four sails = Warm-up, Rising, Climax, Epilogue: done filled, current accent, upcoming outlined; `role="img"` with a label such as "Story part 2 of 4, Rising". |
 | Caption card | Speaker name and shape mark plus only the current line; `aria-live="polite"`; always on while audio plays. |
@@ -98,19 +99,22 @@ UI work follows `DESIGN.md`: use its tokens via the Tailwind theme, never hardco
 - Every change starts from a GitHub Issue; no issue, no branch.
 - **Branches:** `feature/<issue>-short-desc`, `fix/…`, `chore/…`, `docs/…` (e.g. `feature/5-scheduler`).
 - **Commits:** Conventional Commits and an issue reference: `feat(scheduler): fit climax into last 3 min (Refs #5)`. Imperative, subject <= 72 chars.
-- **TDD:** commit the failing test first (red), then the code (green), then refactor.
+- **TDD:** commit the failing test first (red), then the code (green), then refactor. Commit each step on the issue branch; never leave finished work uncommitted. AI tools never push to `main` or merge.
 - **PRs:** one issue per PR, body uses the PR template (`Closes #N`, test notes, partner-review checkbox). Partner reviews before merge; CI must be green; squash-merge to `main`. AI tools never merge.
 - **Code references:** `// TODO(#N): ...` only; never a bare TODO.
 - **Board:** Backlog -> Sprint Todo -> In Progress -> In Review -> Done. Product Owner and Scrum Master rotate each sprint. Do not pull Sprint 2 work into Sprint 1 without team agreement.
 
 ## 5. Do and Don't
 **Do**
+- Put rules such as the custom duration range (15-60 min, steps of 5) in `src/lib/` as pure functions with their own tests; components only call them.
 - Validate all external data (manifest, saved progress, API input, env vars) at the boundary with Zod.
 - Enable row-level security on every table; users read and write only their own progress; check the editor role on the server, never trust the client.
 - Use React escaping or `textContent`; give every control an accessible name; touch targets >= 44 px; contrast >= 4.5:1; show captions for spoken lines.
 
 **Don't**
 - Don't put business logic in components or route handlers.
+- Don't add controls that do nothing: no placeholder toggles, profile buttons or links. Build only what the issue's acceptance criteria list.
+- Don't write hex or `rgba()` colors, font names or touch-target sizes in components or CSS; use the `var(--...)` tokens from `docs/design/tokens.css`.
 - Don't change the database from a dashboard; write a migration.
 - Don't commit secrets or `.env`; use env vars, list names only in `.env.example`; CI never uses production secrets.
 - Don't copy copyrighted text; only public-domain sources, credited in `docs/SOURCES.md`.
