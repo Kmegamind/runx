@@ -54,6 +54,11 @@ Core pattern: `buildTimeline(manifest, durationMin, checkpoint) -> Timeline` is 
 - Time in code is **seconds**, named with a `Sec` suffix. Minutes only at the UI boundary.
 - No `any`. Named exports. Comments explain *why*.
 
+### Gotchas (found while building issue #6)
+- Next.js 16 prerenders pages: never call `Date.now()` or `new Date()` while rendering. Keep time logic in a pure function in `src/lib/` (`finishTime(now, durationMin)`) and pass `now` in.
+- Do not call `setState` synchronously inside `useEffect` (lint error); derive the value while rendering or set it in an event handler.
+- Use `next/link` for internal links.
+
 ### Testing strategy
 - **Unit (Vitest, no DOM):** scheduler, session state machine, checkpoint rules, manifest validator. Cases: 20/30/45 min, resume from each checkpoint, remaining story too long, +/-15 s tolerance, Stop pressed twice.
 - **Integration (Vitest):** route handlers and `src/lib/db` with a mocked or test Supabase client. Cover success, validation error (400), unauthenticated (401) and wrong role (403).
@@ -91,28 +96,28 @@ Look and tokens are in `DESIGN.md` (Components, States); this table is the behav
 | Resume screen | Saved checkpoint, a two-line recap with Skip, length choice, Continue. If the remaining story does not fit, say so and offer a longer length. |
 | Loading and error | Loading: progress bar, the clock does not start until enough audio is buffered. Error: inline `role="alert"` naming what failed, clock stopped, Retry (primary) and Skip this line; never auto-skip. |
 
-`DESIGN.md` also describes things no PRD story or issue asks for (world toggle, postcard, tab bar, music and stereo audio, cadence display). Do not build them unless an issue says so.
+`DESIGN.md` has a "Scope for P2" section: do not build what it lists as not in P2. If `docs/design/mockup.html` and `DESIGN.md` differ, `DESIGN.md` wins.
 
-UI work follows `DESIGN.md`: use its tokens via the Tailwind theme, never hardcode colors or fonts. Token variables are in `docs/design/tokens.css`; character art, icons and windmill SVGs are in `docs/design/assets/` (copy what a screen needs into `public/`).
+UI work follows `DESIGN.md`: use its tokens via the Tailwind theme, never hardcode colors or fonts. Style with Tailwind utility classes and map the tokens in `@theme` in `globals.css`; do not write long hand-made component CSS. Token variables are in `docs/design/tokens.css`; character art, icons and windmill SVGs are in `docs/design/assets/` (copy what a screen needs into `public/`).
 
 ## 4. Scrum and workflow
 - Every change starts from a GitHub Issue; no issue, no branch.
 - **Branches:** `feature/<issue>-short-desc`, `fix/…`, `chore/…`, `docs/…` (e.g. `feature/5-scheduler`).
 - **Commits:** Conventional Commits and an issue reference: `feat(scheduler): fit climax into last 3 min (Refs #5)`. Imperative, subject <= 72 chars.
-- **TDD:** commit the failing test first (red), then the code (green), then refactor. Commit each step on the issue branch; never leave finished work uncommitted. AI tools never push to `main` or merge.
-- **PRs:** one issue per PR, body uses the PR template (`Closes #N`, test notes, partner-review checkbox). Partner reviews before merge; CI must be green; squash-merge to `main`. AI tools never merge.
+- **TDD:** commit the failing test first (red), then the code (green), then refactor. Commit each step on the issue branch; never leave finished work uncommitted.
+- **PRs:** one issue per PR, body uses the PR template (`Closes #N`, test notes, partner-review checkbox). Partner reviews before merge; CI must be green; squash-merge to `main`. AI tools never push to `main` or merge.
 - **Code references:** `// TODO(#N): ...` only; never a bare TODO.
+- **Done means:** `npm run lint`, `npm test`, `npm run build` and `npm run test:e2e` were all run. Report only checks you actually ran, with their result, and list the acceptance criteria met and not met.
 - **Board:** Backlog -> Sprint Todo -> In Progress -> In Review -> Done. Product Owner and Scrum Master rotate each sprint. Do not pull Sprint 2 work into Sprint 1 without team agreement.
 
 ## 5. Do and Don't
 **Do**
-- Put rules such as the custom duration range (15-60 min, steps of 5) in `src/lib/` as pure functions with their own tests; components only call them.
+- Keep business logic out of components and route handlers: put rules such as the custom duration range (15-60 min, steps of 5) in `src/lib/` as pure functions with their own tests; they only call them.
 - Validate all external data (manifest, saved progress, API input, env vars) at the boundary with Zod.
 - Enable row-level security on every table; users read and write only their own progress; check the editor role on the server, never trust the client.
 - Use React escaping or `textContent`; give every control an accessible name; touch targets >= 44 px; contrast >= 4.5:1; show captions for spoken lines.
 
 **Don't**
-- Don't put business logic in components or route handlers.
 - Don't add controls that do nothing: no placeholder toggles, profile buttons or links. Build only what the issue's acceptance criteria list.
 - Don't write hex or `rgba()` colors, font names or touch-target sizes in components or CSS; use the `var(--...)` tokens from `docs/design/tokens.css`.
 - Don't change the database from a dashboard; write a migration.
